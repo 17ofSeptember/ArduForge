@@ -1,0 +1,594 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "Traffic Light State Machine",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.setup",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 240,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.declare",
+          "literals": {},
+          "config": {
+            "name": "waiting",
+            "type": "bool",
+            "initial": "false",
+            "scope": "global",
+            "expose": true
+          }
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 480,
+          "y": 0
+        },
+        "data": {
+          "defId": "io.pinMode",
+          "literals": {
+            "pin": 11
+          },
+          "config": {
+            "mode": "OUTPUT"
+          }
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 720,
+          "y": 0
+        },
+        "data": {
+          "defId": "io.pinMode",
+          "literals": {
+            "pin": 12
+          },
+          "config": {
+            "mode": "OUTPUT"
+          }
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 960,
+          "y": 0
+        },
+        "data": {
+          "defId": "io.pinMode",
+          "literals": {
+            "pin": 13
+          },
+          "config": {
+            "mode": "OUTPUT"
+          }
+        }
+      },
+      {
+        "id": "n6",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 200
+        },
+        "data": {
+          "defId": "event.interrupt",
+          "literals": {},
+          "config": {
+            "pin": "2",
+            "mode": "FALLING"
+          }
+        }
+      },
+      {
+        "id": "n7",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 200
+        },
+        "data": {
+          "defId": "var.set",
+          "literals": {
+            "value": true
+          },
+          "config": {
+            "name": "waiting",
+            "type": "bool"
+          }
+        }
+      },
+      {
+        "id": "n8",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 400
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n9",
+        "type": "forge",
+        "position": {
+          "x": 240,
+          "y": 400
+        },
+        "data": {
+          "defId": "control.everyMs",
+          "literals": {
+            "ms": 1000
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n10",
+        "type": "forge",
+        "position": {
+          "x": 480,
+          "y": 400
+        },
+        "data": {
+          "defId": "control.stateMachine",
+          "literals": {},
+          "config": {
+            "name": "light",
+            "states": "Red, Green, Amber"
+          }
+        }
+      },
+      {
+        "id": "n11",
+        "type": "forge",
+        "position": {
+          "x": 760,
+          "y": 620
+        },
+        "data": {
+          "defId": "led.on",
+          "literals": {
+            "pin": 11
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n12",
+        "type": "forge",
+        "position": {
+          "x": 1000,
+          "y": 620
+        },
+        "data": {
+          "defId": "led.off",
+          "literals": {
+            "pin": 13
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n13",
+        "type": "forge",
+        "position": {
+          "x": 1240,
+          "y": 620
+        },
+        "data": {
+          "defId": "led.off",
+          "literals": {
+            "pin": 12
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n14",
+        "type": "forge",
+        "position": {
+          "x": 1480,
+          "y": 620
+        },
+        "data": {
+          "defId": "control.goToState",
+          "literals": {},
+          "config": {
+            "name": "light",
+            "state": "Green"
+          }
+        }
+      },
+      {
+        "id": "n15",
+        "type": "forge",
+        "position": {
+          "x": 760,
+          "y": 840
+        },
+        "data": {
+          "defId": "led.on",
+          "literals": {
+            "pin": 13
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n16",
+        "type": "forge",
+        "position": {
+          "x": 1000,
+          "y": 840
+        },
+        "data": {
+          "defId": "led.off",
+          "literals": {
+            "pin": 12
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n17",
+        "type": "forge",
+        "position": {
+          "x": 1240,
+          "y": 840
+        },
+        "data": {
+          "defId": "led.off",
+          "literals": {
+            "pin": 11
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n18",
+        "type": "forge",
+        "position": {
+          "x": 1480,
+          "y": 840
+        },
+        "data": {
+          "defId": "control.goToState",
+          "literals": {},
+          "config": {
+            "name": "light",
+            "state": "Amber"
+          }
+        }
+      },
+      {
+        "id": "n19",
+        "type": "forge",
+        "position": {
+          "x": 760,
+          "y": 1060
+        },
+        "data": {
+          "defId": "led.on",
+          "literals": {
+            "pin": 12
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n20",
+        "type": "forge",
+        "position": {
+          "x": 1000,
+          "y": 1060
+        },
+        "data": {
+          "defId": "led.off",
+          "literals": {
+            "pin": 11
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n21",
+        "type": "forge",
+        "position": {
+          "x": 1240,
+          "y": 1060
+        },
+        "data": {
+          "defId": "led.off",
+          "literals": {
+            "pin": 13
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n22",
+        "type": "forge",
+        "position": {
+          "x": 1480,
+          "y": 1060
+        },
+        "data": {
+          "defId": "control.goToState",
+          "literals": {},
+          "config": {
+            "name": "light",
+            "state": "Red"
+          }
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n2",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n2",
+        "target": "n3",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n3",
+        "target": "n4",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n4",
+        "target": "n5",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e5",
+        "source": "n6",
+        "target": "n7",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e6",
+        "source": "n8",
+        "target": "n9",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e7",
+        "source": "n9",
+        "target": "n10",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e8",
+        "source": "n10",
+        "target": "n11",
+        "sourceHandle": "exec-out:Red",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e9",
+        "source": "n11",
+        "target": "n12",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e10",
+        "source": "n12",
+        "target": "n13",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e11",
+        "source": "n13",
+        "target": "n14",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e12",
+        "source": "n10",
+        "target": "n15",
+        "sourceHandle": "exec-out:Green",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e13",
+        "source": "n15",
+        "target": "n16",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e14",
+        "source": "n16",
+        "target": "n17",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e15",
+        "source": "n17",
+        "target": "n18",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e16",
+        "source": "n10",
+        "target": "n19",
+        "sourceHandle": "exec-out:Amber",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e17",
+        "source": "n19",
+        "target": "n20",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e18",
+        "source": "n20",
+        "target": "n21",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e19",
+        "source": "n21",
+        "target": "n22",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

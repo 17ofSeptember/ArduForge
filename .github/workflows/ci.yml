@@ -1,0 +1,91 @@
+# CI for ArduForge.
+#
+# The gate is `npm run check`, the same command contributors run locally, so a
+# green tick here means what a green run on a laptop means. It is deliberately
+# not a second, CI-only definition of "passing".
+#
+# It runs on all three platforms because the project supports all three and
+# nothing else keeps that true. The macOS-only assumptions this repo started
+# with were invisible precisely because CI only ever ran Ubuntu.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A second push to the same branch makes the first run irrelevant.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: check (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # One platform failing should still report the other two, since the whole
+      # point of the matrix is telling platform bugs apart from real ones.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Matches the engines field in package.json.
+          node-version: 22
+          cache: npm
+
+      # The corpus gates compile every sketch and compare machine code, so the
+      # toolchain is a hard requirement rather than a convenience.
+      - name: Install arduino-cli
+        uses: arduino/setup-arduino-cli@v2
+
+      - name: Install the AVR core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+
+      - name: Install the libraries the corpus needs
+        # Servo, NeoPixel, DHT and LCD I2C appear in corpus sketches. Without
+        # them those compiles fail and Gate 1 reports n/a rather than a verdict,
+        # which would look like a pass.
+        run: |
+          arduino-cli lib install "Servo"
+          arduino-cli lib install "Adafruit NeoPixel"
+          arduino-cli lib install "DHT sensor library"
+          arduino-cli lib install "LiquidCrystal I2C"
+
+      - run: npm ci
+
+      # Playwright browsers live in a shared per-user cache and the package has
+      # no postinstall hook, so `npm ci` installs no browser. `import:browser`
+      # fetches Chromium itself; only Linux additionally needs system libraries,
+      # and only there does the extra step exist.
+      - name: Playwright system libraries
+        if: runner.os == 'Linux'
+        run: npx playwright install-deps chromium
+
+      # typecheck, lint, contrast, tests, and every import gate including the
+      # browser gate and the compile-backed corpus.
+      - name: Check
+        run: npm run check
+
+      - name: Build
+        run: npm run build
+
+      - name: Tokens are in step with the generator
+        # tokens.css is generated. If someone hand-edits a hex, the file stops
+        # matching what the generator produces, which is exactly the drift the
+        # contrast gate cannot see because it reads the edited file.
+        #
+        # Ubuntu only. This is a platform-independent property, and running a
+        # `git diff` gate on Windows invites false failures from line endings.
+        if: runner.os == 'Linux'
+        run: |
+          npm run tokens
+          git diff --exit-code -- client/src/styles/tokens.css \
+            || (echo "::error::tokens.css is out of step with scripts/generate-tokens.mjs. Run 'npm run tokens' and commit the result." && exit 1)

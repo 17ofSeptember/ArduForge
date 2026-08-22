@@ -1,0 +1,719 @@
+/**
+ * ArduForge design tokens — the single source of colour for the app.
+ *
+ * Structure (THEME.md Phase 0):
+ *   1. Ramps      — 11-step OKLCH scales generated from the five palette
+ *                   primitives. Everything below references a ramp step or a
+ *                   derived value; nothing references a raw primitive.
+ *   2. Chrome     — app shell, surfaces, typography, controls. Themed.
+ *   3. Semantic   — node categories, port types, chart series, syntax,
+ *                   connection status. Hue-preserving, harmonized to the
+ *                   palette's chroma envelope so they read as one family.
+ *   4. Tailwind   — @theme inline, mapping chrome tokens to utilities and
+ *                   removing Tailwind's default palette.
+ *
+ * The pre-migration @theme block was deleted in Phase 3, once every component
+ * had moved onto the tokens above.
+ *
+ * Every value here was generated and contrast-verified in OKLCH. Do not
+ * hand-edit a hex: change the generator inputs and regenerate, then re-run
+ * scripts/contrast-check.ts (added in Phase 1).
+ *
+ * Palette primitives:
+ *   Crimson       #B80C09  destructive / error
+ *   Slate Blue    #0B4F6C  structural / secondary
+ *   Electric Cyan #01BAEF  primary interactive
+ *   Ghost White   #FBFBFF  light background / inverse text
+ *   Rich Black    #040F16  dark background / primary text
+ */
+@import 'tailwindcss';
+
+/* Tailwind v4 auto-detects sources but skips anything .gitignore matches. That
+   silently dropped every class in client/src/build/ for as long as .gitignore
+   carried an unanchored `build/`. Declaring the source explicitly means a
+   future ignore rule cannot quietly un-style a directory again. */
+@source '../../src/**/*.{ts,tsx}';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. RAMPS — theme-independent. Generated in OKLCH at fixed lightness steps so
+   steps are comparable across hues. The step nearest each primitive's own
+   lightness is snapped back to the exact primitive.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* cyan */
+  --ramp-cyan-50: #F7FCFF;
+  --ramp-cyan-100: #DEF4FF;
+  --ramp-cyan-200: #B7E8FF;
+  --ramp-cyan-300: #7CD8FF;
+  --ramp-cyan-400: #01BAEF;
+  --ramp-cyan-500: #00A0CF;
+  --ramp-cyan-600: #0082A8;
+  --ramp-cyan-700: #006482;
+  --ramp-cyan-800: #00485F;
+  --ramp-cyan-900: #002A39;
+  --ramp-cyan-950: #001018;
+
+  /* slate */
+  --ramp-slate-50: #F8FCFE;
+  --ramp-slate-100: #E6F2FA;
+  --ramp-slate-200: #C5E5F7;
+  --ramp-slate-300: #AAD1E8;
+  --ramp-slate-400: #87B7D2;
+  --ramp-slate-500: #629AB9;
+  --ramp-slate-600: #3D7E9F;
+  --ramp-slate-700: #166284;
+  --ramp-slate-800: #0B4F6C;
+  --ramp-slate-900: #00293B;
+  --ramp-slate-950: #001019;
+
+  /* crimson */
+  --ramp-crimson-50: #FFFAF9;
+  --ramp-crimson-100: #FFEBE8;
+  --ramp-crimson-200: #FFD4CD;
+  --ramp-crimson-300: #FFB5AA;
+  --ramp-crimson-400: #FF8878;
+  --ramp-crimson-500: #ED5B4C;
+  --ramp-crimson-600: #D03328;
+  --ramp-crimson-700: #B80C09;
+  --ramp-crimson-800: #7F0001;
+  --ramp-crimson-900: #4D0000;
+  --ramp-crimson-950: #230000;
+
+  /* ghost — Ghost White */
+  --ramp-ghost-50: #FBFBFF;
+  --ramp-ghost-100: #F0F0F4;
+  --ramp-ghost-200: #DFDFE7;
+  --ramp-ghost-300: #CACAD2;
+  --ramp-ghost-400: #AFAFB6;
+  --ramp-ghost-500: #919198;
+  --ramp-ghost-600: #75757B;
+  --ramp-ghost-700: #5A5A5F;
+  --ramp-ghost-800: #414145;
+  --ramp-ghost-900: #252528;
+  --ramp-ghost-950: #0D0D0F;
+
+  /* ink — Rich Black */
+  --ramp-ink-50: #FBFBFC;
+  --ramp-ink-100: #EDF1F3;
+  --ramp-ink-200: #D9E1E6;
+  --ramp-ink-300: #C3CCD1;
+  --ramp-ink-400: #A7B1B7;
+  --ramp-ink-500: #89949B;
+  --ramp-ink-600: #6C787F;
+  --ramp-ink-700: #505D65;
+  --ramp-ink-800: #36434B;
+  --ramp-ink-900: #1A272F;
+  --ramp-ink-950: #040F16;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. THEMES
+
+   Light is the `:root` default so the cascade has a complete palette even if
+   the pre-paint script in index.html fails. Dark is applied by explicit
+   `data-theme`, and by system preference when the user has expressed no
+   choice. The app defaults to dark — see client/src/styles/theme.ts.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+
+  /* Elevation — app → panel → card → header → input → popover → modal */
+  --bg-app: #D5E2EA;
+  --bg-panel: #E6EEF3;
+  --bg-card: #F0F5F8;
+  --bg-header: #C9DAE3;
+  --bg-input: #DFEAF0;
+  --bg-popover: #FBFBFF;
+  --bg-modal: #FBFBFF;
+  /* Full-saturation Slate Blue: structural chrome only (toolbar, sidebar).
+     It carries inverse text exclusively — never body text. */
+  --bg-structural: #0B4F6C;
+
+  /* Typography */
+  --text-primary: #040F16;
+  --text-secondary: #2F627D;
+  --text-muted: #3F6174;
+  --text-link: #006482;
+  --text-on-structural: #FBFBFF;
+  /* Sits on a node-category header, port chip, or status pill.
+     Dark theme: headers are light, so the label is dark.
+     Light theme: headers are dark, so the label is light.
+     Holding it dark in both squeezes the light-mode header band between "light
+     enough for dark text" and "dark enough to separate from a white card"
+     until ten categories cannot be told apart in greyscale. */
+  --text-on-semantic: #FBFBFF;
+
+  /* Interactive fills */
+  --bg-interactive: #01BAEF;
+  --bg-interactive-hover: #7CD8FF;
+  --bg-interactive-active: #00A0CF;
+  --text-on-interactive: #040F16;
+  --bg-destructive: #B80C09;
+  --bg-destructive-hover: #D03328;
+  --text-on-destructive: #FBFBFF;
+
+  /* Borders */
+  --border-subtle: #C8D7DF;
+  --border-default: #A2BCCB;
+  --border-strong: #5A87A0;
+
+  /* Focus — verified ≥3:1 on every surface level above */
+  --focus-ring: #006482;
+  --focus-ring-offset: #FBFBFF;
+
+  /* Disabled */
+  --bg-disabled: #DEE6EA;
+  --text-disabled: #909EA7;
+  --border-disabled: #C5D0D6;
+
+  /* Selection */
+  --bg-selected: #CBEEFF;
+  --border-selected: #0082A8;
+  --text-selected: #040F16;
+
+  /* Feedback */
+  --feedback-success: #006B40;
+  --feedback-warning: #815300;
+  --feedback-info: #005DA9;
+  --feedback-destructive: #B80C09;
+
+  /* Overlay */
+  --scrim: rgb(4 15 22 / 0.45);
+  --shadow-color: 11 40 56;
+  --shadow-1: 0 1px 2px rgb(11 40 56 / 0.08);
+  --shadow-2: 0 4px 12px rgb(11 40 56 / 0.12);
+  --shadow-3: 0 16px 40px rgb(11 40 56 / 0.18);
+
+  /* Scrollbar */
+  --scrollbar-thumb: #ADC1CD;
+  --scrollbar-thumb-hover: #86A3B4;
+  --scrollbar-track: transparent;
+
+  /* Connection status — six states; `stale` is desaturated so frozen values
+     can never be mistaken for live ones (BUILD_PLAN §3.7). */
+  --conn-idle: #45525B;
+  --conn-connecting: #BA7A00;
+  --conn-connected: #008954;
+  --conn-streaming: #007193;
+  --conn-stale: #593C30;
+  --conn-error: #BB120D;
+
+  /* Live pin state — deliberately outside the connection-status hue set */
+  --pin-high: #6C4CBD;
+  --pin-low: #CBDAE3;
+
+  /* Node categories — harmonized; hue preserved, L/C re-derived */
+  --cat-events: #4C2495;
+  --cat-io: #8B5900;
+  --cat-control: #9E1423;
+  --cat-math: #004884;
+  --cat-logic: #006491;
+  --cat-variables: #00673E;
+  --cat-time: #856400;
+  --cat-serial: #4B5564;
+  --cat-components: #920F57;
+  --cat-custom: #3A4452;
+
+  /* Port types */
+  --port-exec: #36434B;
+  --port-bool: #D34C4E;
+  --port-int: #097CDB;
+  --port-float: #008D56;
+  --port-string: #AC59BF;
+  --port-pin: #A96E00;
+  --port-any: #787A83;
+
+  /* Chart series — spread in lightness so they survive desaturation */
+  --chart-series-1: #006D8E;
+  --chart-series-2: #8D0754;
+  --chart-series-3: #926E00;
+  --chart-series-4: #00643C;
+  --chart-grid: #D1DBE1;
+  --chart-axis: #3F6174;
+
+  /* C++ syntax */
+  --syntax-keyword: #964BA7;
+  --syntax-type: #0071A2;
+  --syntax-string: #007A4A;
+  --syntax-number: #935F00;
+  --syntax-function: #006BC1;
+  --syntax-preprocessor: #B14075;
+  --syntax-operator: #626A75;
+  --syntax-punctuation: #636A74;
+  --syntax-comment: #596D79;
+  --syntax-error: #B80C09;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Elevation — app → panel → card → header → input → popover → modal */
+  --bg-app: #040F16;
+  --bg-panel: #0F202A;
+  --bg-card: #19303C;
+  --bg-header: #233E4D;
+  --bg-input: #091922;
+  --bg-popover: #274555;
+  --bg-modal: #1D3644;
+  /* Full-saturation Slate Blue: structural chrome only (toolbar, sidebar).
+     It carries inverse text exclusively — never body text. */
+  --bg-structural: #0B4F6C;
+
+  /* Typography */
+  --text-primary: #FBFBFF;
+  --text-secondary: #93B4C4;
+  --text-muted: #9CB2BE;
+  --text-link: #0EBDF2;
+  --text-on-structural: #FBFBFF;
+  /* Sits on a node-category header, port chip, or status pill.
+     Dark theme: headers are light, so the label is dark.
+     Light theme: headers are dark, so the label is light.
+     Holding it dark in both squeezes the light-mode header band between "light
+     enough for dark text" and "dark enough to separate from a white card"
+     until ten categories cannot be told apart in greyscale. */
+  --text-on-semantic: #040F16;
+
+  /* Interactive fills */
+  --bg-interactive: #01BAEF;
+  --bg-interactive-hover: #7CD8FF;
+  --bg-interactive-active: #00A0CF;
+  --text-on-interactive: #040F16;
+  --bg-destructive: #B80C09;
+  --bg-destructive-hover: #D03328;
+  --text-on-destructive: #FBFBFF;
+
+  /* Borders */
+  --border-subtle: #233945;
+  --border-default: #335567;
+  --border-strong: #4E7E98;
+
+  /* Focus — verified ≥3:1 on every surface level above */
+  --focus-ring: #01BAEF;
+  --focus-ring-offset: #040F16;
+
+  /* Disabled */
+  --bg-disabled: #172229;
+  --text-disabled: #5E6B73;
+  --border-disabled: #25323A;
+
+  /* Selection */
+  --bg-selected: #003344;
+  --border-selected: #01BAEF;
+  --text-selected: #FBFBFF;
+
+  /* Feedback */
+  --feedback-success: #10C87E;
+  --feedback-warning: #F09E00;
+  --feedback-info: #6DB3FF;
+  --feedback-destructive: #FF9081;
+
+  /* Overlay */
+  --scrim: rgb(4 15 22 / 0.70);
+  --shadow-color: 0 0 0;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.45);
+  --shadow-2: 0 4px 12px rgb(0 0 0 / 0.55);
+  --shadow-3: 0 16px 40px rgb(0 0 0 / 0.65);
+
+  /* Scrollbar */
+  --scrollbar-thumb: #314C5A;
+  --scrollbar-thumb-hover: #46687B;
+  --scrollbar-track: transparent;
+
+  /* Connection status — six states; `stale` is desaturated so frozen values
+     can never be mistaken for live ones (BUILD_PLAN §3.7). */
+  --conn-idle: #74838B;
+  --conn-connecting: #FFB754;
+  --conn-connected: #1BCB81;
+  --conn-streaming: #A6E4FF;
+  --conn-stale: #A68677;
+  --conn-error: #FF9081;
+
+  /* Live pin state — deliberately outside the connection-status hue set */
+  --pin-high: #A486FD;
+  --pin-low: #233640;
+
+  /* Node categories — harmonized; hue preserved, L/C re-derived */
+  --cat-events: #8C6DE2;
+  --cat-io: #FFBD65;
+  --cat-control: #FF7876;
+  --cat-math: #379AFB;
+  --cat-logic: #7CCDFF;
+  --cat-variables: #36D98E;
+  --cat-time: #FFCD53;
+  --cat-serial: #A6B2C3;
+  --cat-components: #ED6CA6;
+  --cat-custom: #848FA0;
+
+  /* Port types */
+  --port-exec: #FBFBFF;
+  --port-bool: #FF7F7C;
+  --port-int: #3195F6;
+  --port-float: #48E699;
+  --port-string: #CC78E0;
+  --port-pin: #FFC780;
+  --port-any: #B6B8C1;
+
+  /* Chart series — spread in lightness so they survive desaturation */
+  --chart-series-1: #00C0F7;
+  --chart-series-2: #D0528D;
+  --chart-series-3: #FFCD53;
+  --chart-series-4: #00B570;
+  --chart-grid: #1C2E38;
+  --chart-axis: #9CB2BE;
+
+  /* C++ syntax */
+  --syntax-keyword: #CF81E1;
+  --syntax-type: #5CC3FF;
+  --syntax-string: #3AC985;
+  --syntax-number: #FFB344;
+  --syntax-function: #65AFFF;
+  --syntax-preprocessor: #E771A4;
+  --syntax-operator: #B6BECB;
+  --syntax-punctuation: #979FAA;
+  --syntax-comment: #7B909C;
+  --syntax-error: #FF9081;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    /* Elevation — app → panel → card → header → input → popover → modal */
+    --bg-app: #040F16;
+    --bg-panel: #0F202A;
+    --bg-card: #19303C;
+    --bg-header: #233E4D;
+    --bg-input: #091922;
+    --bg-popover: #274555;
+    --bg-modal: #1D3644;
+    /* Full-saturation Slate Blue: structural chrome only (toolbar, sidebar).
+       It carries inverse text exclusively — never body text. */
+    --bg-structural: #0B4F6C;
+
+    /* Typography */
+    --text-primary: #FBFBFF;
+    --text-secondary: #93B4C4;
+    --text-muted: #9CB2BE;
+    --text-link: #0EBDF2;
+    --text-on-structural: #FBFBFF;
+    /* Sits on a node-category header, port chip, or status pill.
+       Dark theme: headers are light, so the label is dark.
+       Light theme: headers are dark, so the label is light.
+       Holding it dark in both squeezes the light-mode header band between "light
+       enough for dark text" and "dark enough to separate from a white card"
+       until ten categories cannot be told apart in greyscale. */
+    --text-on-semantic: #040F16;
+
+    /* Interactive fills */
+    --bg-interactive: #01BAEF;
+    --bg-interactive-hover: #7CD8FF;
+    --bg-interactive-active: #00A0CF;
+    --text-on-interactive: #040F16;
+    --bg-destructive: #B80C09;
+    --bg-destructive-hover: #D03328;
+    --text-on-destructive: #FBFBFF;
+
+    /* Borders */
+    --border-subtle: #233945;
+    --border-default: #335567;
+    --border-strong: #4E7E98;
+
+    /* Focus — verified ≥3:1 on every surface level above */
+    --focus-ring: #01BAEF;
+    --focus-ring-offset: #040F16;
+
+    /* Disabled */
+    --bg-disabled: #172229;
+    --text-disabled: #5E6B73;
+    --border-disabled: #25323A;
+
+    /* Selection */
+    --bg-selected: #003344;
+    --border-selected: #01BAEF;
+    --text-selected: #FBFBFF;
+
+    /* Feedback */
+    --feedback-success: #10C87E;
+    --feedback-warning: #F09E00;
+    --feedback-info: #6DB3FF;
+    --feedback-destructive: #FF9081;
+
+    /* Overlay */
+    --scrim: rgb(4 15 22 / 0.70);
+    --shadow-color: 0 0 0;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.45);
+    --shadow-2: 0 4px 12px rgb(0 0 0 / 0.55);
+    --shadow-3: 0 16px 40px rgb(0 0 0 / 0.65);
+
+    /* Scrollbar */
+    --scrollbar-thumb: #314C5A;
+    --scrollbar-thumb-hover: #46687B;
+    --scrollbar-track: transparent;
+
+    /* Connection status — six states; `stale` is desaturated so frozen values
+       can never be mistaken for live ones (BUILD_PLAN §3.7). */
+    --conn-idle: #74838B;
+    --conn-connecting: #FFB754;
+    --conn-connected: #1BCB81;
+    --conn-streaming: #A6E4FF;
+    --conn-stale: #A68677;
+    --conn-error: #FF9081;
+
+    /* Live pin state — deliberately outside the connection-status hue set */
+    --pin-high: #A486FD;
+    --pin-low: #233640;
+
+    /* Node categories — harmonized; hue preserved, L/C re-derived */
+    --cat-events: #8C6DE2;
+    --cat-io: #FFBD65;
+    --cat-control: #FF7876;
+    --cat-math: #379AFB;
+    --cat-logic: #7CCDFF;
+    --cat-variables: #36D98E;
+    --cat-time: #FFCD53;
+    --cat-serial: #A6B2C3;
+    --cat-components: #ED6CA6;
+    --cat-custom: #848FA0;
+
+    /* Port types */
+    --port-exec: #FBFBFF;
+    --port-bool: #FF7F7C;
+    --port-int: #3195F6;
+    --port-float: #48E699;
+    --port-string: #CC78E0;
+    --port-pin: #FFC780;
+    --port-any: #B6B8C1;
+
+    /* Chart series — spread in lightness so they survive desaturation */
+    --chart-series-1: #00C0F7;
+    --chart-series-2: #D0528D;
+    --chart-series-3: #FFCD53;
+    --chart-series-4: #00B570;
+    --chart-grid: #1C2E38;
+    --chart-axis: #9CB2BE;
+
+    /* C++ syntax */
+    --syntax-keyword: #CF81E1;
+    --syntax-type: #5CC3FF;
+    --syntax-string: #3AC985;
+    --syntax-number: #FFB344;
+    --syntax-function: #65AFFF;
+    --syntax-preprocessor: #E771A4;
+    --syntax-operator: #B6BECB;
+    --syntax-punctuation: #979FAA;
+    --syntax-comment: #7B909C;
+    --syntax-error: #FF9081;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. TAILWIND (THEME.md Phase 2)
+
+   Tailwind v4 is configured in CSS, not in a `tailwind.config.ts` — that file
+   does not exist in this project and v4 does not read one. `@theme` is the
+   equivalent, and the `inline` keyword is load-bearing here: it substitutes the
+   token reference into the generated utility, so `bg-card` resolves against
+   whichever `--bg-card` is in scope. A plain `@theme` would snapshot the value
+   into `:root` and the utilities would not follow `data-theme`.
+
+   Token names here deliberately do not collide with the legacy block below.
+   Both are live during the migration; Phase 3 moves components onto these and
+   deletes the legacy block.
+
+   Only CHROME is exposed as utilities. Node categories, port types, chart
+   series, syntax, and connection status are consumed by React Flow, uPlot and
+   CodeMirror through JS, not through className — Phase 4 wires those to the
+   custom properties directly. Generating utilities for them would create the
+   second, competing styling system THEME.md warns about.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* Remove Tailwind's default palette. With it reachable, `bg-slate-800` keeps
+     working and hardcoded utilities creep back in until the theme rots. There
+     are currently zero uses of it in client/src (verified in Phase 0). */
+  --color-*: initial;
+
+  /* No exceptions. Phase 3 moved the last 26 `text-black` / `text-white` /
+     `bg-black/60` sites onto --text-on-semantic, --text-on-interactive,
+     --text-on-destructive and --scrim, so nothing reaches for a raw colour any
+     more. The matching ESLint rule bans black and white alongside the palette. */
+}
+
+@theme inline {
+  /* Surfaces */
+  --color-app: var(--bg-app);
+  --color-panel: var(--bg-panel);
+  --color-card: var(--bg-card);
+  --color-header: var(--bg-header);
+  --color-input: var(--bg-input);
+  --color-popover: var(--bg-popover);
+  --color-modal: var(--bg-modal);
+  --color-structural: var(--bg-structural);
+
+  /* Typography */
+  --color-content: var(--text-primary);
+  --color-content-secondary: var(--text-secondary);
+  --color-content-muted: var(--text-muted);
+  --color-link: var(--text-link);
+  --color-on-structural: var(--text-on-structural);
+  --color-on-semantic: var(--text-on-semantic);
+  --color-pin-high: var(--pin-high);
+  --color-pin-low: var(--pin-low);
+
+  /* Borders */
+  --color-edge: var(--border-default);
+  --color-edge-subtle: var(--border-subtle);
+  --color-edge-strong: var(--border-strong);
+
+  /* Interactive fills */
+  --color-interactive: var(--bg-interactive);
+  --color-interactive-hover: var(--bg-interactive-hover);
+  --color-interactive-active: var(--bg-interactive-active);
+  --color-on-interactive: var(--text-on-interactive);
+  --color-destructive: var(--bg-destructive);
+  --color-destructive-hover: var(--bg-destructive-hover);
+  --color-on-destructive: var(--text-on-destructive);
+
+  /* Feedback — text and icon colours, distinct from the destructive fill */
+  --color-success: var(--feedback-success);
+  --color-warning: var(--feedback-warning);
+  --color-info: var(--feedback-info);
+  --color-error: var(--feedback-destructive);
+
+  /* State */
+  --color-selected: var(--bg-selected);
+  --color-selected-edge: var(--border-selected);
+  --color-disabled: var(--bg-disabled);
+  --color-disabled-content: var(--text-disabled);
+  --color-disabled-edge: var(--border-disabled);
+  --color-focus: var(--focus-ring);
+  --color-focus-offset: var(--focus-ring-offset);
+
+  /* Overlay and scrollbar */
+  --color-scrim: var(--scrim);
+  --color-scroll-thumb: var(--scrollbar-thumb);
+  --color-scroll-thumb-hover: var(--scrollbar-thumb-hover);
+
+  /* Elevation shadows. Named e1/e2/e3 rather than sm/md/lg so they do not
+     override Tailwind's defaults, which shadow-lg/xl/2xl still use today. */
+  --shadow-e1: var(--shadow-1);
+  --shadow-e2: var(--shadow-2);
+  --shadow-e3: var(--shadow-3);
+
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, 'Cascadia Code', monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  /*
+   * This is an app shell, not a document: the header and status bar are fixed
+   * furniture and each panel scrolls its own content. Letting the document
+   * scroll instead strands that furniture mid-page, so the page itself never
+   * scrolls.
+   */
+  overflow: hidden;
+}
+
+/*
+ * React Flow (THEME.md Phase 4). Every one of these is an override point the
+ * library documents, and every one of them beats passing a prop: React Flow
+ * renders through SVG and CSS, so a var() here follows a theme change with no
+ * rebuild and no subscription.
+ *
+ * Verified against @xyflow/react's own markup — MiniMap nodes are <rect> with a
+ * style.fill, and the Background is an SVG <pattern>. Neither touches a canvas,
+ * so neither needs a resolved value.
+ */
+.react-flow {
+  --xy-background-color: var(--bg-app);
+  --xy-background-pattern-dots-color: var(--border-subtle);
+  --xy-background-pattern-lines-color: var(--border-subtle);
+  --xy-background-pattern-cross-color: var(--border-subtle);
+
+  --xy-edge-stroke: var(--port-any);
+  --xy-edge-stroke-selected: var(--border-selected);
+  --xy-connectionline-stroke: var(--port-any);
+
+  --xy-handle-background-color: var(--bg-card);
+  --xy-handle-border-color: var(--border-strong);
+
+  --xy-selection-background-color: color-mix(in oklch, var(--bg-selected) 45%, transparent);
+  --xy-selection-border: 1px dashed var(--border-selected);
+
+  --xy-controls-button-background-color: var(--bg-card);
+  --xy-controls-button-background-color-hover: var(--bg-header);
+  --xy-controls-button-color: var(--text-secondary);
+  --xy-controls-button-color-hover: var(--text-primary);
+  --xy-controls-button-border-color: var(--border-subtle);
+  --xy-controls-box-shadow: var(--shadow-2);
+
+  --xy-minimap-background-color: var(--bg-panel);
+  --xy-minimap-mask-background-color: var(--scrim);
+
+  --xy-edge-label-background-color: var(--bg-card);
+  --xy-edge-label-color: var(--text-primary);
+
+  --xy-attribution-background-color: transparent;
+}
+
+/*
+ * Focus (THEME.md Phase 3 item 3). One ring for every control, so it cannot get
+ * lost on one surface and not another — the contrast gate verifies --focus-ring
+ * clears 3:1 against all seven elevation levels in both themes.
+ *
+ * Element+pseudo-class beats the `.outline-none` utility on specificity, and
+ * :focus-visible fires only for keyboard focus, so clicking a button still does
+ * not draw a ring.
+ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Scrollbars (THEME.md Phase 3 item 8). Firefox takes the two-value shorthand;
+   WebKit needs the pseudo-elements. Both read the same tokens. */
+* {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

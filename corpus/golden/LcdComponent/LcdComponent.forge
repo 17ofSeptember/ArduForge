@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "LcdComponent",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.setup",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 0
+        },
+        "data": {
+          "defId": "lcd.init",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 240
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 240
+        },
+        "data": {
+          "defId": "lcd.clear",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 240
+        },
+        "data": {
+          "defId": "lcd.printAt",
+          "literals": {
+            "col": 3,
+            "row": 1,
+            "text": "Ready"
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n6",
+        "type": "forge",
+        "position": {
+          "x": 780,
+          "y": 240
+        },
+        "data": {
+          "defId": "lcd.backlight",
+          "literals": {
+            "on": true
+          },
+          "config": {
+            "on": false
+          }
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n2",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n3",
+        "target": "n4",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n4",
+        "target": "n5",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n5",
+        "target": "n6",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

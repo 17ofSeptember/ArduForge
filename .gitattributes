@@ -1,0 +1,37 @@
+# Normalise line endings so contributors on Windows do not produce whole-file
+# diffs. Everything is stored LF in the repository; Git converts on checkout
+# according to each contributor's core.autocrlf setting.
+* text=auto eol=lf
+
+# Shell entry points must stay LF even on Windows checkouts. A .command or .sh
+# file with CRLF fails with a confusing "bad interpreter" error.
+*.sh      text eol=lf
+*.command text eol=lf
+
+# Batch files are the opposite case: cmd.exe wants CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Arduino sources are text, and the corpus compares them byte for byte. Pinning
+# them to LF keeps the import fidelity hashes stable across platforms.
+*.ino text eol=lf
+*.h   text eol=lf
+*.cpp text eol=lf
+
+# Generated, and compared with `git diff --exit-code` in CI.
+client/src/styles/tokens.css text eol=lf
+
+# Binary. Never touch these.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.wasm binary
+*.woff  binary
+*.woff2 binary
+*.pdf  binary
+
+# Keep generated output out of diffs and language statistics.
+docs/node-reference.md linguist-generated=true
+package-lock.json      linguist-generated=true

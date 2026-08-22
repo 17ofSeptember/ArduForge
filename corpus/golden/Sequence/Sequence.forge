@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "Sequence",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 0
+        },
+        "data": {
+          "defId": "control.sequence",
+          "literals": {},
+          "config": {
+            "steps": 3
+          }
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 120
+        },
+        "data": {
+          "defId": "io.digitalWrite",
+          "literals": {
+            "pin": 2,
+            "value": true
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 240
+        },
+        "data": {
+          "defId": "io.digitalWrite",
+          "literals": {
+            "pin": 3,
+            "value": true
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 360
+        },
+        "data": {
+          "defId": "io.digitalWrite",
+          "literals": {
+            "pin": 4,
+            "value": true
+          },
+          "config": {}
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n2",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n2",
+        "target": "n3",
+        "sourceHandle": "exec-out:1",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n2",
+        "target": "n4",
+        "sourceHandle": "exec-out:2",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n2",
+        "target": "n5",
+        "sourceHandle": "exec-out:3",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

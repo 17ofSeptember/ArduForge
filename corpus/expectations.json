@@ -1,0 +1,27 @@
+{
+  "phase": 4.2,
+  "note": "Gate 1 and Gate 3 are FLOORS marked with a triangle, not climbing numbers: every sketch imports to a valid graph whose regenerated source compiles to identical machine code, so both sit at tier size permanently and a drop is a HARD STOP. Coverage (percentage of STATEMENTS on native rather than Custom C++ nodes) is the ratcheting metric. Tier A structural — does the imported graph match the .forge its .ino was generated from — is the honest shape metric; it stays 0/11 until pattern lifting, because the ground-truth graphs use Every-N-Milliseconds, Push Button, On Interrupt and analogRead nodes that Phases 3 and 4 introduce. Re-record with 'npm run import:corpus -- --record' at each phase exit. Gate 2 Tier C sits at 13/16 by design: the millis lift moves a global timestamp declaration into loop() as the node's own static local, which is a real AST difference and exactly the structural change a lift is. Gate 1 confirms the machine code is identical on all three. Phase 3 exit criteria: Tier B Gate 1 stays 17/17 while coverage rises materially.",
+  "tiers": {
+    "A": {
+      "gate1": 11,
+      "gate2": 11,
+      "gate3": 11,
+      "structural": 0,
+      "coverage": 33
+    },
+    "B": {
+      "gate1": 17,
+      "gate2": 17,
+      "gate3": 17,
+      "structural": 0,
+      "coverage": 42
+    },
+    "C": {
+      "gate1": 16,
+      "gate2": 13,
+      "gate3": 16,
+      "structural": 0,
+      "coverage": 37
+    }
+  }
+}

@@ -1,0 +1,49 @@
+node_modules/
+dist/
+# Anchored to the repo root on purpose. An unanchored `build/` also matches
+# client/src/build/ and server/src/build/, which are source directories — it
+# kept BuildPanel.tsx and the build store out of version control entirely, and
+# out of Tailwind's source scan, which respects .gitignore.
+/build/
+*.log
+.DS_Store
+.env
+.env.local
+.vite/
+coverage/
+*.tsbuildinfo
+
+# arduino-cli scratch build dirs
+.arduforge-build/
+
+# Compiled-hex cache for the import fidelity harness. Keyed by source hash, so
+# it is always reproducible from the corpus — committing it would add megabytes
+# that churn on every toolchain bump.
+corpus/.hexcache/
+
+# Working notes and process records. These stay on disk and are genuinely
+# useful while developing, but they are the author's records rather than
+# project documentation, and a contributor never needs them.
+#
+# The design specs (BUILD_PLAN.md, IMPORT.md, THEME.md) are deliberately NOT
+# here: source files cite them by section as normative, so they ship.
+/AUDIT.md
+/audit/
+/ship.md
+/SHIP.md
+/AwryDuino.code-workspace
+*.code-workspace
+
+# Phase records from the theming work. Superseded by docs/THEMING.md, which is
+# the maintained version.
+/docs/CHROME-SWEEP.md
+/docs/COLOR-INVENTORY.md
+/docs/CONTRAST-REPORT.md
+/docs/JS-COLOR.md
+/docs/THEME-AUDIT.md
+
+# Claude Code local configuration. Holds the attribution setting that keeps
+# Co-Authored-By trailers out of this repo's commits. Personal tooling config,
+# not project documentation.
+/.claude/
+/CLAUDE.md

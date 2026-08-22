@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "Stopwatch",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.setup",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 0
+        },
+        "data": {
+          "defId": "time.stopwatch",
+          "literals": {},
+          "config": {
+            "action": "start",
+            "name": "run"
+          }
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 240
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 360
+        },
+        "data": {
+          "defId": "time.stopwatchRead",
+          "literals": {},
+          "config": {
+            "name": "run"
+          }
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 240
+        },
+        "data": {
+          "defId": "serial.printValue",
+          "literals": {
+            "label": "elapsed",
+            "value": ""
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n6",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 520
+        },
+        "data": {
+          "defId": "time.elapsedSince",
+          "literals": {
+            "since": 0
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n7",
+        "type": "forge",
+        "position": {
+          "x": 780,
+          "y": 240
+        },
+        "data": {
+          "defId": "serial.printValue",
+          "literals": {
+            "label": "since",
+            "value": ""
+          },
+          "config": {}
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n2",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n3",
+        "target": "n5",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n4",
+        "target": "n5",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n5",
+        "target": "n7",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e5",
+        "source": "n6",
+        "target": "n7",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

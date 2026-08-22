@@ -1,0 +1,427 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "Data Dashboard",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.setup",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 240,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.declare",
+          "literals": {},
+          "config": {
+            "name": "ch0",
+            "type": "int",
+            "initial": "0",
+            "scope": "global",
+            "expose": true
+          }
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 480,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.declare",
+          "literals": {},
+          "config": {
+            "name": "ch1",
+            "type": "int",
+            "initial": "0",
+            "scope": "global",
+            "expose": true
+          }
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 720,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.declare",
+          "literals": {},
+          "config": {
+            "name": "ch2",
+            "type": "int",
+            "initial": "0",
+            "scope": "global",
+            "expose": true
+          }
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 960,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.declare",
+          "literals": {},
+          "config": {
+            "name": "ch3",
+            "type": "int",
+            "initial": "0",
+            "scope": "global",
+            "expose": true
+          }
+        }
+      },
+      {
+        "id": "n6",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 260
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n7",
+        "type": "forge",
+        "position": {
+          "x": 240,
+          "y": 260
+        },
+        "data": {
+          "defId": "control.everyMs",
+          "literals": {
+            "ms": 50
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n8",
+        "type": "forge",
+        "position": {
+          "x": 480,
+          "y": 260
+        },
+        "data": {
+          "defId": "var.set",
+          "literals": {
+            "value": 0
+          },
+          "config": {
+            "name": "ch0",
+            "type": "int"
+          }
+        }
+      },
+      {
+        "id": "n9",
+        "type": "forge",
+        "position": {
+          "x": 480,
+          "y": 480
+        },
+        "data": {
+          "defId": "pot.readRaw",
+          "literals": {
+            "pin": "A0"
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n10",
+        "type": "forge",
+        "position": {
+          "x": 740,
+          "y": 260
+        },
+        "data": {
+          "defId": "var.set",
+          "literals": {
+            "value": 0
+          },
+          "config": {
+            "name": "ch1",
+            "type": "int"
+          }
+        }
+      },
+      {
+        "id": "n11",
+        "type": "forge",
+        "position": {
+          "x": 740,
+          "y": 480
+        },
+        "data": {
+          "defId": "pot.readRaw",
+          "literals": {
+            "pin": "A1"
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n12",
+        "type": "forge",
+        "position": {
+          "x": 1000,
+          "y": 260
+        },
+        "data": {
+          "defId": "var.set",
+          "literals": {
+            "value": 0
+          },
+          "config": {
+            "name": "ch2",
+            "type": "int"
+          }
+        }
+      },
+      {
+        "id": "n13",
+        "type": "forge",
+        "position": {
+          "x": 1000,
+          "y": 480
+        },
+        "data": {
+          "defId": "pot.readRaw",
+          "literals": {
+            "pin": "A2"
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n14",
+        "type": "forge",
+        "position": {
+          "x": 1260,
+          "y": 260
+        },
+        "data": {
+          "defId": "var.set",
+          "literals": {
+            "value": 0
+          },
+          "config": {
+            "name": "ch3",
+            "type": "int"
+          }
+        }
+      },
+      {
+        "id": "n15",
+        "type": "forge",
+        "position": {
+          "x": 1260,
+          "y": 480
+        },
+        "data": {
+          "defId": "pot.readRaw",
+          "literals": {
+            "pin": "A3"
+          },
+          "config": {}
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n2",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n2",
+        "target": "n3",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n3",
+        "target": "n4",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n4",
+        "target": "n5",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e5",
+        "source": "n6",
+        "target": "n7",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e6",
+        "source": "n9",
+        "target": "n8",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      },
+      {
+        "id": "e7",
+        "source": "n11",
+        "target": "n10",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      },
+      {
+        "id": "e8",
+        "source": "n13",
+        "target": "n12",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      },
+      {
+        "id": "e9",
+        "source": "n15",
+        "target": "n14",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      },
+      {
+        "id": "e10",
+        "source": "n7",
+        "target": "n8",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e11",
+        "source": "n8",
+        "target": "n10",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e12",
+        "source": "n10",
+        "target": "n12",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e13",
+        "source": "n12",
+        "target": "n14",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

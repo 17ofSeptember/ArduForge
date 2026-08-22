@@ -1,0 +1,309 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "Arrays",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.setup",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.arrayDeclare",
+          "literals": {},
+          "config": {
+            "name": "samples",
+            "type": "int",
+            "size": 5,
+            "initial": "0"
+          }
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.arraySet",
+          "literals": {
+            "index": 0,
+            "value": 7
+          },
+          "config": {
+            "name": "samples",
+            "type": "int"
+          }
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 780,
+          "y": 0
+        },
+        "data": {
+          "defId": "var.declare",
+          "literals": {},
+          "config": {
+            "name": "counter",
+            "type": "int",
+            "initial": "10",
+            "scope": "global",
+            "expose": false
+          }
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 1040,
+          "y": 0
+        },
+        "data": {
+          "defId": "serial.begin",
+          "literals": {},
+          "config": {
+            "baud": "9600"
+          }
+        }
+      },
+      {
+        "id": "n6",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 260
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n7",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 380
+        },
+        "data": {
+          "defId": "var.arrayGet",
+          "literals": {
+            "index": 1
+          },
+          "config": {
+            "name": "samples",
+            "type": "int"
+          }
+        }
+      },
+      {
+        "id": "n8",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 520
+        },
+        "data": {
+          "defId": "var.arrayLength",
+          "literals": {},
+          "config": {
+            "name": "samples"
+          }
+        }
+      },
+      {
+        "id": "n9",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 260
+        },
+        "data": {
+          "defId": "serial.printValue",
+          "literals": {
+            "label": "value",
+            "value": ""
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n10",
+        "type": "forge",
+        "position": {
+          "x": 780,
+          "y": 260
+        },
+        "data": {
+          "defId": "serial.printValue",
+          "literals": {
+            "label": "length",
+            "value": ""
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n11",
+        "type": "forge",
+        "position": {
+          "x": 1040,
+          "y": 260
+        },
+        "data": {
+          "defId": "var.decrement",
+          "literals": {
+            "by": 1
+          },
+          "config": {
+            "name": "counter"
+          }
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n2",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n2",
+        "target": "n3",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n3",
+        "target": "n4",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n4",
+        "target": "n5",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e5",
+        "source": "n6",
+        "target": "n9",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e6",
+        "source": "n9",
+        "target": "n10",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e7",
+        "source": "n10",
+        "target": "n11",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e8",
+        "source": "n7",
+        "target": "n9",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      },
+      {
+        "id": "e9",
+        "source": "n8",
+        "target": "n10",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "int"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

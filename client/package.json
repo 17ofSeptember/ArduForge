@@ -1,0 +1,45 @@
+{
+  "name": "@arduforge/client",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run",
+    "embed:firmware": "node scripts/embed-firmware.mjs",
+    "docs": "tsx scripts/gen-docs.ts"
+  },
+  "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.3",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/state": "^6.7.1",
+    "@codemirror/view": "^6.43.8",
+    "@xyflow/react": "^12.11.3",
+    "elkjs": "^0.9.3",
+    "lucide-react": "^1.31.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tree-sitter-cpp": "^0.23.4",
+    "uplot": "^1.6.32",
+    "web-tree-sitter": "^0.26.12",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^4.1.10",
+    "jsdom": "^30.0.1",
+    "playwright": "^1.55.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vitest": "^4.1.10"
+  }
+}

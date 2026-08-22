@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // DOM is here for type resolution only. These scripts run in Node, but they
+    // import client modules (persistence.ts) whose browser-only branches still
+    // have to typecheck.
+    "lib": ["ES2023", "DOM"],
+    "types": ["node"],
+    "noEmit": true,
+    // Scripts run straight through tsx, which resolves the specifier as written,
+    // so relative imports carry their .ts extension.
+    "allowImportingTsExtensions": true,
+    // Resolved relative to this file, so no deprecated baseUrl is needed.
+    "paths": {
+      "@/*": ["../client/src/*"]
+    }
+  },
+  "include": ["**/*.ts"]
+}

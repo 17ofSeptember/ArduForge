@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "meta": {
+    "name": "DhtComponent",
+    "createdAt": "1970-01-01T00:00:00.000Z",
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "board": {
+    "fqbn": "arduino:avr:uno"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "forge",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "data": {
+          "defId": "event.loop",
+          "literals": {},
+          "config": {}
+        }
+      },
+      {
+        "id": "n2",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 160
+        },
+        "data": {
+          "defId": "dht.readTemperature",
+          "literals": {
+            "pin": 4
+          },
+          "config": {
+            "model": "DHT11"
+          }
+        }
+      },
+      {
+        "id": "n3",
+        "type": "forge",
+        "position": {
+          "x": 260,
+          "y": 320
+        },
+        "data": {
+          "defId": "dht.readHumidity",
+          "literals": {
+            "pin": 7
+          },
+          "config": {
+            "model": "DHT22"
+          }
+        }
+      },
+      {
+        "id": "n4",
+        "type": "forge",
+        "position": {
+          "x": 520,
+          "y": 0
+        },
+        "data": {
+          "defId": "serial.printValue",
+          "literals": {
+            "label": "C",
+            "value": ""
+          },
+          "config": {}
+        }
+      },
+      {
+        "id": "n5",
+        "type": "forge",
+        "position": {
+          "x": 780,
+          "y": 0
+        },
+        "data": {
+          "defId": "serial.printValue",
+          "literals": {
+            "label": "RH",
+            "value": ""
+          },
+          "config": {}
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "n1",
+        "target": "n4",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e2",
+        "source": "n4",
+        "target": "n5",
+        "sourceHandle": "exec-out:then",
+        "targetHandle": "exec-in",
+        "type": "forge",
+        "data": {
+          "kind": "exec",
+          "portType": "exec"
+        }
+      },
+      {
+        "id": "e3",
+        "source": "n2",
+        "target": "n4",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "float"
+        }
+      },
+      {
+        "id": "e4",
+        "source": "n3",
+        "target": "n5",
+        "sourceHandle": "out:out",
+        "targetHandle": "in:value",
+        "type": "forge",
+        "data": {
+          "kind": "data",
+          "portType": "float"
+        }
+      }
+    ]
+  },
+  "dashboard": {
+    "pages": [],
+    "widgets": []
+  },
+  "settings": {}
+}

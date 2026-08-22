@@ -1,0 +1,88 @@
+ArduForge
+Copyright (c) 2026 17ofSeptember
+
+This product includes and depends on third-party work. ArduForge itself is MIT
+licensed (see LICENSE). Nothing below changes that; this file records what
+belongs to other people and under what terms.
+
+
+## Parser
+
+ArduForge parses Arduino C++ with tree-sitter, and ships two WebAssembly
+binaries built from these packages:
+
+  web-tree-sitter    MIT    the tree-sitter runtime
+  tree-sitter-cpp    MIT    the C++ grammar
+
+Both are loaded as wasm at runtime. The native bindings in those packages are
+not used.
+
+
+## Bundled JavaScript dependencies
+
+The browser bundle includes the project's npm dependencies. All are permissive
+(predominantly MIT, with ISC, Apache-2.0 and BSD) with one exception worth
+naming:
+
+  elkjs    EPL-2.0    graph layout, used to arrange imported sketches
+
+The Eclipse Public License 2.0 is a file-level copyleft. Depending on elkjs
+unmodified imposes no obligation on ArduForge's own license. If you distribute
+a prebuilt bundle rather than source, EPL-2.0 requires that the corresponding
+source for elkjs remain available; it is published at
+https://github.com/kieler/elkjs under that licence.
+
+
+## Arduino example sketches in the import corpus
+
+corpus/tierB/ contains sketches used to test the sketch importer against real
+Arduino code rather than only against code this project generated.
+
+Sketches sourced from the Arduino IDE's bundled examples come from
+https://github.com/arduino/arduino-examples, which is released under CC0-1.0, a
+public domain dedication. Most also carry an inline "This example code is in
+the public domain" line of their own.
+
+  AnalogInOutSerial, AnalogReadSerial, BareMinimum, Blink, BlinkWithoutDelay,
+  Button, Calibration, Debounce, DigitalReadSerial, Fade, RowColumnScanning,
+  Smoothing, StateChangeDetection, toneMelody
+
+Sweep comes from the Arduino Servo library's examples and carries its own
+public domain declaration:
+
+  Sweep    by BARRAGAN, modified 2013 by Scott Fitzgerald
+           "This example code is in the public domain."
+
+ShiftOut is not a copy of anything. Arduino IDE 2.x no longer bundles that
+example, so it was written for this project and lives as source in
+scripts/build-corpus.ts.
+
+
+## Arduino libraries required by component nodes
+
+Some nodes generate code that depends on an Arduino library. ArduForge does not
+bundle, vendor, or redistribute any of them. When a graph needs one,
+`arduino-cli` fetches it from the Arduino Library Manager onto the user's own
+machine, and it is compiled into the user's sketch. Each is governed by its own
+licence, which is not affected by, and does not affect, ArduForge's.
+
+  Adafruit NeoPixel
+  DHT sensor library
+  IRremote
+  LiquidCrystal I2C
+  RTClib
+  SD
+  Servo                (LGPL-2.1, per its upstream LICENSE.txt)
+  SoftwareSerial
+  Stepper
+
+StandardFirmata is handled the same way. The "Upload StandardFirmata" action
+compiles it from the Firmata library already installed on the user's machine
+rather than shipping a prebuilt binary, so no Firmata code is redistributed
+here either.
+
+
+## Toolchain
+
+ArduForge invokes `arduino-cli` as an external program. It is neither bundled
+nor redistributed, and remains under its own licence.

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArduForge</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#040F16" />
+
+    <!--
+      Pre-paint background (THEME.md Phase 4, "static assets").
+
+      tokens.css arrives with the JS bundle, so between first paint and hydration
+      the page would otherwise be browser-default white — a flash of the wrong
+      theme on every cold load, which Phase 6.2 explicitly tests for.
+
+      These four values are the only place --bg-app is duplicated. They have to
+      be: this rule must apply before any stylesheet has loaded. Keep them in
+      step with the `--bg-app` lines in client/src/styles/tokens.css.
+    -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      :root {
+        color-scheme: light;
+        background-color: #d5e2ea;
+      }
+      :root[data-theme='dark'] {
+        color-scheme: dark;
+        background-color: #040f16;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+          color-scheme: dark;
+          background-color: #040f16;
+        }
+      }
+    </style>
+
+    <!--
+      Pre-paint theme resolution (THEME.md Phase 0.3). This must stay inline and
+      stay in <head>: a module import resolves after first paint, so every cold
+      load would flash the wrong theme before correcting itself.
+
+      Mirrors the resolution rule in client/src/styles/theme.ts — change both
+      together. 'system' intentionally leaves the attribute off so the
+      prefers-color-scheme block above and in tokens.css takes over.
+    -->
+    <script>
+      (function () {
+        var preference = 'dark';
+        try {
+          var stored = window.localStorage.getItem('arduforge.theme');
+          if (stored === 'system' || stored === 'light' || stored === 'dark') {
+            preference = stored;
+          }
+        } catch (error) {
+          // Storage unavailable (private mode, blocked cookies). Fall back to
+          // the documented default rather than leaving the app unthemed.
+        }
+        if (preference !== 'system') {
+          document.documentElement.setAttribute('data-theme', preference);
+        }
+
+        // Keep the address-bar / task-switcher colour in step with the resolved
+        // theme. A static <meta> would be wrong for whichever theme it is not.
+        var dark =
+          preference === 'dark' ||
+          (preference === 'system' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', dark ? '#040F16' : '#D5E2EA');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

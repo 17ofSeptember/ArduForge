@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ArduForge">
+  <!--
+    Palette primitives, written literally on purpose: a favicon is fetched by
+    the browser outside the document, so it cannot reference tokens.css.
+    Rich Black #040F16, Electric Cyan #01BAEF, Slate Blue #0B4F6C.
+  -->
+  <rect width="64" height="64" rx="14" fill="#040F16" />
+  <path d="M20 14h18a12 12 0 0 1 0 24h-8" stroke="#01BAEF" stroke-width="6"
+        stroke-linecap="round" fill="none" />
+  <path d="M20 14v36" stroke="#0B4F6C" stroke-width="6" stroke-linecap="round" />
+  <circle cx="44" cy="50" r="5" fill="#01BAEF" />
+  <path d="M30 38l14 12" stroke="#01BAEF" stroke-width="4" stroke-linecap="round" />
+</svg>

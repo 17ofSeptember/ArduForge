@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest something
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: >
+        Describe the problem rather than the solution. Knowing what you are
+        building usually suggests a better answer than the one either of us
+        thought of first.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to see?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Node canvas
+        - Code generation
+        - Dashboard and live link
+        - Sketch import
+        - Board support
+        - Something else

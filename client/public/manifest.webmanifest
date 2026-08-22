@@ -1,0 +1,12 @@
+{
+  "name": "ArduForge",
+  "short_name": "ArduForge",
+  "description": "Visual Arduino programming — build graphs, generate real C++, and drive the board live.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#040F16",
+  "theme_color": "#040F16",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

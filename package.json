@@ -1,0 +1,50 @@
+{
+  "name": "arduforge",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Local-first visual programming environment for Arduino. Node graph in, readable Arduino C++ out.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "node scripts/start.mjs",
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "npm run dev --workspace client",
+    "dev:server": "npm run dev --workspace server",
+    "dev:server:watch": "npm run dev:watch --workspace server",
+    "dev:server:mock": "npm run dev --workspace server -- --mock",
+    "build": "npm run build --workspace server && npm run build --workspace client",
+    "typecheck": "npm run typecheck --workspace server && npm run typecheck --workspace client && npm run typecheck:scripts",
+    "typecheck:scripts": "tsc -p scripts/tsconfig.json --noEmit",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "tokens": "node scripts/generate-tokens.mjs",
+    "contrast": "tsx scripts/contrast-check.ts",
+    "import:grammar": "tsx --tsconfig client/tsconfig.json scripts/verify-grammar.ts",
+    "import:frontend": "tsx --tsconfig client/tsconfig.json scripts/verify-frontend.ts",
+    "import:idempotence": "tsx --tsconfig client/tsconfig.json scripts/verify-idempotence.ts",
+    "import:browser": "playwright install chromium && npm run build --workspace client && tsx --tsconfig client/tsconfig.json scripts/verify-browser.ts",
+    "import:golden": "tsx --tsconfig client/tsconfig.json scripts/verify-golden.ts",
+    "import:selftest": "tsx --tsconfig client/tsconfig.json scripts/verify-harness.ts",
+    "import:build-corpus": "tsx --tsconfig client/tsconfig.json scripts/build-corpus.ts",
+    "import:fidelity": "tsx --tsconfig client/tsconfig.json scripts/import-fidelity.ts",
+    "import:corpus": "tsx --tsconfig client/tsconfig.json scripts/import-corpus.ts",
+    "check": "npm run typecheck && npm run lint && npm run contrast && npm test && npm run import:grammar && npm run import:selftest && npm run import:frontend && npm run import:idempotence && npm run import:golden && npm run import:browser && npm run import:corpus"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.15.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.67.0"
+  }
+}
