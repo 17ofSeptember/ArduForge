@@ -70,13 +70,19 @@ say(`Node ${process.versions.node}`);
 /**
  * Windows has no `npm`, only `npm.cmd`, and since the CVE-2024-27980 mitigation
  * Node refuses to spawn a .cmd without a shell. POSIX needs neither.
+ *
+ * On Windows the command is pre-joined into one string rather than passed as
+ * (command, args) with `shell: true`. Node 24 deprecates that combination
+ * (DEP0190) because the arguments are concatenated rather than escaped, and it
+ * prints a warning in the middle of the launcher's output. Every argument here
+ * is a hardcoded literal with no spaces, so joining is equivalent, and doing it
+ * explicitly is honest about what the shell was going to receive anyway.
  */
 function spawnTool(command, args, options = {}) {
-  return spawn(command, args, {
-    cwd: ROOT,
-    shell: IS_WINDOWS,
-    ...options,
-  });
+  if (IS_WINDOWS) {
+    return spawn([command, ...args].join(' '), { cwd: ROOT, shell: true, ...options });
+  }
+  return spawn(command, args, { cwd: ROOT, ...options });
 }
 
 const npmBin = IS_WINDOWS ? 'npm.cmd' : 'npm';

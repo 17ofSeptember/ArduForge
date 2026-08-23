@@ -6,7 +6,13 @@
  * own capability response rather than a hard-coded board table, so this works
  * on any board that speaks the protocol.
  */
-import Board from 'firmata';
+import FirmataIO, { type Firmata } from 'firmata-io';
+
+// `.Firmata` is the Board class with no default Transport bound. That is
+// intentional: §3.1 forbids anything but the SerialManager constructing a port,
+// and leaving the default unset makes the forbidden path throw instead of
+// silently working.
+const Board = FirmataIO.Firmata;
 import { serialManager } from '@/serial/manager.js';
 import type { Lease, RevokeReason } from '@/serial/types.js';
 import { LeaseTransport } from '@/firmata/transport.js';
@@ -49,7 +55,7 @@ function describeModes(modes: readonly number[]): PinMode[] {
 
 export class FirmataSession {
   private lease: Lease | null = null;
-  private board: Board | null = null;
+  private board: Firmata | null = null;
   private transport: LeaseTransport | null = null;
 
   constructor(private readonly events: FirmataEvents) {}
@@ -123,7 +129,7 @@ export class FirmataSession {
     }));
   }
 
-  private require(): Board {
+  private require(): Firmata {
     const board = this.board;
     if (board === null || !this.connected) throw new Error('Not connected to a Firmata board.');
     return board;
