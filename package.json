@@ -26,6 +26,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "tokens": "node scripts/generate-tokens.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
     "contrast": "tsx scripts/contrast-check.ts",
     "import:grammar": "tsx --tsconfig client/tsconfig.json scripts/verify-grammar.ts",
     "import:frontend": "tsx --tsconfig client/tsconfig.json scripts/verify-frontend.ts",
