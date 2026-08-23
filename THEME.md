@@ -1,12 +1,4 @@
-# ArduForge — Theme Migration
 
-> **How to run:** Save as `THEME.md` at the repo root alongside the uploaded `theme.css`. Fresh Claude Code session:
->
-> `Read THEME.md in full. Do not change any styling yet. Execute Phase 0 only — produce the color inventory and the token system — then stop.`
-
----
-
-## Context
 
 The codebase is being retheme to a new 5-color palette. The source file `theme.css` is a **starting point, not the final token set**. It contains real problems that must be fixed during migration, documented in Phase 1. Do not apply it verbatim.
 
