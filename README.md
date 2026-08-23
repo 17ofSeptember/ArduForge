@@ -3,7 +3,7 @@
 A visual programming environment for Arduino. You build a node graph, it
 generates Arduino C++, compiles and uploads it with `arduino-cli`, and a live
 dashboard shows variables and pins on the running board. Everything runs
-locally. There is no account and no cloud service.
+locally. There is no account and no cloud service. VIDEO: https://youtu.be/eeF19fWYNsY?si=kSku-DnQP7awkpwx
 
 ## What it does
 
