@@ -1,5 +1,8 @@
 # ArduForge
 
+<img width="677" height="369" alt="image" src="https://github.com/user-attachments/assets/32af4cd3-43c7-49bf-9a9c-df00eb7c6bf7" />
+
+
 A visual programming environment for Arduino. You build a node graph, it
 generates Arduino C++, compiles and uploads it with `arduino-cli`, and a live
 dashboard shows variables and pins on the running board. Everything runs
